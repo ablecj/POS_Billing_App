@@ -1,0 +1,84 @@
+.ant-layout-has-sider{
+    padding: 5px !important;
+   
+}
+
+.ant-layout.ant-layout-has-sider{
+    height: 100vh;
+   
+}
+
+.ant-layout-sider{
+    padding-top: 10px !important;
+    border-radius: 10px !important;
+}
+
+.ant-layout-header{
+    box-shadow: 0 0 3px grey;
+    border-radius: 8px;
+    margin: 5px;
+}
+.menu-Link {
+    text-decoration: none !important;
+
+}
+
+.ant-layout-content{
+    overflow: auto;
+}
+.ant-row{
+    overflow: auto;
+}
+
+.ant-layout-header{
+    line-height: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.cart-items{
+    padding-left: 20px; 
+    padding-right: 30px;
+    cursor: pointer;
+    
+}
+
+.cart-items p{
+    font-weight: bold;
+}
+
+.cart-item-num{
+    display: flex;
+    margin-left: -9px;
+    margin-bottom: 5px;
+    color: #e10808;
+}
+
+.ant-card-bordered{
+    border: 1px solid #ddd;
+    transition: box-shadow 0.3s ease;
+}
+
+.ant-card-bordered:hover{
+    box-shadow: 0px 0px 10px rgb(6, 6, 6);
+}
+
+
+    
+.item-button{
+    margin-top: 15px; 
+    justify-content: center;
+    display: flex;
+}
+
+.ant-btn-default {
+    background-color: rgb(3, 77, 3) !important;
+    color: whitesmoke !important;
+}
+.ant-btn-default:hover{
+    background-color: rgb(152, 207, 255) !important;
+    color: black !important;
+}
+
+
