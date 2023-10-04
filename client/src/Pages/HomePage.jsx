@@ -4,26 +4,32 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Col, Row } from 'antd';
 import ItemList from '../Components/ItemList';
+import { useDispatch } from 'react-redux';
 
 // creating axios baseurl model 
 const axiosInstance = axios.create({baseURL: "http://localhost:8080"});
 
 const HomePage = () => {
   const [itemDatas, setItemDatas] = useState([]);
+
+  const dispatch = useDispatch();
    // useEffect
    useEffect(()=>{
     const getAllItems = async()=>{
+
       try {
+        dispatch({type: "SHOW_LOADING"})
         const {data} = await axiosInstance.get('/api/items/get-item');
         // const { data} = await axios.get('/api/items/get-item');
         setItemDatas(data);
+        dispatch({type: "HIDE_LOADING"})
         console.log("data from backend", data);
       } catch (error) {
         console.log(error,"error occured!");
       }
     };
     getAllItems();
-  },[]);
+  },[dispatch]); 
   return (
  <DefaultLayout >
     <Row>

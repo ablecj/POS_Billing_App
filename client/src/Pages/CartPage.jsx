@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import { DeleteOutlined,PlusCircleOutlined,MinusCircleOutlined } from '@ant-design/icons';
 import { Table } from 'antd';
 
+
 const CartPage = () => {
     const {cartItems} = useSelector(state=> state.rootReducer)
 
