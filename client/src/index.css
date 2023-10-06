@@ -11,3 +11,34 @@
     height: 100px;
     width: 100px;
 }
+
+.catagory{
+    border: 2px solid gray;
+    margin-right: 20px;
+    margin-bottom: 10px;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 15px;
+}
+
+.catagory img{
+    margin-left: 10px;
+}
+
+.catagory-active{
+    border: 2px solid rgba(2, 196, 2, 0.692);
+    background-color: rgba(199, 186, 186, 0.774);
+}
+
+.catagory-container{
+    display: flex;
+}
+
+/* for mobile view */
+@media (max-width: 767px) {
+    .catagory-container {
+      display: flex;
+      flex-direction: column;
+      width: 180px;
+    }
+}

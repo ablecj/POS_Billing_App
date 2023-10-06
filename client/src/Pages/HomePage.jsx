@@ -11,6 +11,23 @@ const axiosInstance = axios.create({baseURL: "http://localhost:8080"});
 
 const HomePage = () => {
   const [itemDatas, setItemDatas] = useState([]);
+  // useState for selecting catagory
+  const [selectedCatagory, setSelectedCatagory] = useState('')
+// creating an array for catagory
+const catagories = [
+  {
+    name: 'Drinks',
+    imageUrl: 'https://icons.iconarchive.com/icons/google/noto-emoji-food-drink/256/32438-tropical-drink-icon.png'
+  },
+  {
+    name: 'Rice',
+    imageUrl: 'https://icons.iconarchive.com/icons/zakar/japanicons/256/bol-de-riz-plein-icon.png'
+  },
+  {
+    name: 'Noodles',
+    imageUrl: 'https://icons.iconarchive.com/icons/google/noto-emoji-food-drink/256/32404-steaming-bowl-icon.png'
+  }
+]
 
   const dispatch = useDispatch();
    // useEffect
@@ -32,11 +49,26 @@ const HomePage = () => {
   },[dispatch]); 
   return (
  <DefaultLayout >
+  <div className='catagory-container'>
+    {catagories.map(catagory=>(
+      <div key={catagory.name} className={`d-flex catagory
+       ${selectedCatagory === catagory.name.toLowerCase() && 'catagory-active'}`}
+       onClick={()=> setSelectedCatagory(catagory.name.toLowerCase())}
+       >
+        <h4>{catagory.name}</h4>
+        <img src={catagory.imageUrl} alt={catagory.name} 
+          height="40" width="40"
+        />
+      </div>
+    ))}
+  </div>
     <Row>
       {
-        itemDatas.map((item,index) =>(
+        itemDatas.filter((item)=>item.category === selectedCatagory)
+        .map((item,index) =>(
           <Col key={index} xs={24} lg={6} sm={6} md={12} >
-            <ItemList item={item}  />
+            <ItemList key={item.id} item={item}  />
+            {console.log("items filtered", item)}
           </Col>
         ))
       }

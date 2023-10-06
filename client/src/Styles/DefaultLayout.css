@@ -80,5 +80,12 @@
     background-color: rgb(152, 207, 255) !important;
     color: black !important;
 }
+.ant-table-bordered{
+    border: 1px solid black;
+}
+.ant-table-cell{
+    background-color: rgb(167, 195, 255);
+}
+
 
 
