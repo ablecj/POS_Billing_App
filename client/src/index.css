@@ -42,3 +42,44 @@
       width: 180px;
     }
 }
+
+/* Register Page  */
+.register{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    flex-direction: column;
+}
+
+.register input{
+    width: 400px !important;
+    border: 1px solid gray;
+}
+
+/* .register input:hover{
+    border: 1px solid rgb(252, 0, 0);
+} */
+
+.register-form{
+    background-color: rgb(211, 162, 226);
+    padding: 25px;
+     box-shadow: rgba(240, 46, 170, 0.4) -5px 5px, rgba(240, 46, 170, 0.3) -10px 10px,
+      rgba(240, 46, 170, 0.2) -15px 15px, rgba(240, 46, 170, 0.1) -20px 20px, 
+      rgba(240, 46, 170, 0.05) -25px 25px;
+}
+
+.register-form button:hover{
+    background-color: rgb(0, 105, 18) !important;
+}
+
+.register-form h1{
+    text-align: center;
+    color: rgba(26, 25, 25, 0.829);
+    padding: 10px;
+}
+.register-form h3{
+    text-align: center;
+    color: rgba(53, 53, 53, 0.918);
+}
+
