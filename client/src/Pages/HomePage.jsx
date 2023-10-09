@@ -55,7 +55,7 @@ const catagories = [
        ${selectedCatagory === catagory.name.toLowerCase() && 'catagory-active'}`}
        onClick={()=> setSelectedCatagory(catagory.name.toLowerCase())}
        >
-        <h4>{catagory.name}</h4>
+        <p className='catagory-name'>{catagory.name}</p>
         <img src={catagory.imageUrl} alt={catagory.name} 
           height="40" width="40"
         />

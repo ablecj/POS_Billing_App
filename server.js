@@ -29,6 +29,12 @@ app.use('/api/items', require('./Routes/itemRoute.js'));
 // post
 app.use('/api/items', require('./Routes/itemRoute.js'));
 
+// post method for the login
+app.use('/api/users', require('./Routes/userRoute.js'))
+
+// post method for the register
+app.use('/api/users', require('./Routes/userRoute.js'))
+
 // port
 const PORT = process.env.PORT || 8080;
 

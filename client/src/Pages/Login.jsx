@@ -1,12 +1,41 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Button, Form, Input } from "antd";
+import { Button, Form, Input,message} from "antd";
+import { useDispatch} from "react-redux";  
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+
+// calling Axios as an instance
+const axiosInstance = axios.create({ baseURL: "http://localhost:8080" });
+
 
 const Login = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
     // handle submit for login page
-    const handleSubmit =(value)=>{
-        console.log(value);
+    const handleSubmit = async(value)=>{
+        try {
+          dispatch({type: "SHOW_LOADING"});
+         const res = await axiosInstance.post('/api/users/login', value);
+          dispatch({type: "HIDE_LOADING"});
+          message.success("Login Succesfully !");
+          localStorage.setItem('auth',JSON.stringify(res.data));
+          navigate('/');
+        } catch (error) {
+          dispatch({type: "HIDE_LOADING"});
+          message.error("Something Went Wrong !")
+          console.log(error);
+        }
     }
+
+    // currently login user
+    useEffect(()=>{
+      if(localStorage.getItem('auth')){
+        localStorage.getItem('auth');
+        navigate('/');
+      }
+    },[navigate]);
 
   return (
     <>

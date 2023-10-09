@@ -1,5 +1,5 @@
 import "antd/dist/antd";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import HomePage from "./Pages/HomePage";
 import ItemPage from "./Pages/ItemPage"
 import CartPage from "./Pages/CartPage";
@@ -10,9 +10,25 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/items" element={<ItemPage />} />
-          <Route path="/cart" element={<CartPage />}/>
+          <Route path="/" 
+          element={
+         <ProtectedRoute>
+           <HomePage />
+         </ProtectedRoute>
+          } />
+          <Route path="/items"
+            element={
+              <ProtectedRoute>
+                 <ItemPage />
+              </ProtectedRoute>
+           
+            } />
+          <Route path="/cart" 
+          element={
+          <ProtectedRoute>
+            <CartPage />
+          </ProtectedRoute>
+          }/>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />}/>
         </Routes>
@@ -22,3 +38,11 @@ function App() {
 }
 
 export default App;
+
+export function ProtectedRoute({children}){
+  if(localStorage.getItem('auth')){
+    return children;
+  }else{
+    return <Navigate to='/login' />;
+  }
+}

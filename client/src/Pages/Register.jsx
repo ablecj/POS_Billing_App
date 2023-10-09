@@ -1,12 +1,40 @@
 import { Button, Form, Input } from "antd";
-import React from "react";
+import React,{useEffect} from "react";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { message } from "antd";
+import axios from 'axios';
+import { useNavigate } from "react-router-dom";
+
+
+const axiosInstance = axios.create({ baseURL: "http://localhost:8080" });
 
 const Register = () => {
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+
   // form sumbiting function
-  const handleSubmit = (value) => {
-    console.log("value", value);
+  const handleSubmit = async(value) => {
+    try {
+      dispatch({ type: "SHOW_LOADING" });
+      await axiosInstance.post('/api/users/register', value);
+      message.success('Registered Successfuly !');
+      dispatch({type: "HIDE_LOADING"});
+      navigate('/login')
+    } catch (error) {
+      dispatch({type: "HIDE_LOADING"});
+      message.error('Something Went Wrong !') 
+      console.log(error);
+    }
   };
+
+     // currently register user
+     useEffect(()=>{
+      if(localStorage.getItem('auth')){
+        localStorage.getItem('auth');
+        navigate('/');
+      }
+    },[navigate]);
 
   return (
     <>
@@ -21,8 +49,23 @@ const Register = () => {
             <Form.Item name="userId" label="User ID">
               <Input />
             </Form.Item>
-            <Form.Item name="password" label="Password">
-              <Input type="password" />
+            <Form.Item name="password" 
+             label="Password"
+              rules={
+                [
+                  {
+                    required: true,
+                    message: 'Please Enter Your Password ! '
+                  },
+                  {
+                    min: 8,
+                    message: 'Password Must Be atleast 8 characters !'
+
+                  }
+                ]
+              }
+              >
+              <Input.Password />
             </Form.Item>
 
             <div className="d-flex justify-content-between">
