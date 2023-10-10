@@ -26,14 +26,17 @@ app.use(morgan("dev"));
 // get routes
 app.use('/api/items', require('./Routes/itemRoute.js'));
 
-// post
+// post routes
 app.use('/api/items', require('./Routes/itemRoute.js'));
 
-// post method for the login
+// post method for the login routes
 app.use('/api/users', require('./Routes/userRoute.js'))
 
-// post method for the register
+// post method for the register routes
 app.use('/api/users', require('./Routes/userRoute.js'))
+
+// post method for the bills route
+app.use('/api/bills', require('./Routes/billsRoute.js'))
 
 // port
 const PORT = process.env.PORT || 8080;
