@@ -15,6 +15,7 @@ const Register = () => {
 
   // form sumbiting function
   const handleSubmit = async(value) => {
+    console.log(value,"register val");
     try {
       dispatch({ type: "SHOW_LOADING" });
       await axiosInstance.post('/api/users/register', value);

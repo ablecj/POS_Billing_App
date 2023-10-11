@@ -4,7 +4,7 @@ import DefaultLayout from '../Components/DefaultLayout';
 const CustomerPage = () => {
   return (
     <DefaultLayout>
-        CustomerPage
+        <h1>Customer Page</h1>
     </DefaultLayout>
   )
 }
