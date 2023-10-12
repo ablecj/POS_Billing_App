@@ -19,7 +19,9 @@ const addBillsController = async(req, res)=>{
 const getBillsController =  async(req,res)=> {
     try {
         const Bills = await billsModels.find();
-        res.status(200).send("get item succesfully !");
+        console.log(Bills,"bills loging")
+        res.status(200).send({ message: "get item successfully!", bills: Bills });
+
     } catch (error) {
         console.log("error",error);
     }

@@ -1,25 +1,38 @@
 const userModel = require("../models/userModel.js");
 
+const bcrypt = require('bcrypt');
+const saltRounds = 10; // You can adjust the number of salt rounds based on your security needs
+
+
+
 const loginController = async (req, res) => {
   try {
     const { userId, password } = req.body;
     console.log(req.body);
-    const user = await userModel
-      .findOne({ userId, password, verified: true })
-      .exec();
-    console.log(user, "user");
+    const user = await userModel.findOne({ userId, verified: true }).exec();
+
     if (user) {
-      res.status(200).send(user);
+      // Compare the provided password with the stored hashed password
+      const isPasswordValid = await bcrypt.compare(password, user.password);
+      if (isPasswordValid) {
+        res.status(200).send(user);
+      } else {
+        res.status(401).json({
+          message: "Login Failed: Invalid password!",
+          user: null,
+        });
+      }
     } else {
-      res.json({
-        message: "Login Failed !",
-        user,
+      res.status(401).json({
+        message: "Login Failed: User not found or not verified!",
+        user: null,
       });
     }
   } catch (error) {
     console.log("error", error);
   }
 };
+
 
 // add items
 // const registerController = async (req, res) => {
@@ -33,6 +46,8 @@ const loginController = async (req, res) => {
 //     console.log("error", error);
 //   }
 // };
+
+
 
 const registerController = async (req, res) => {
   const { userId, password, name } = req.body;
@@ -50,8 +65,11 @@ const registerController = async (req, res) => {
       return res.status(400).json({ message: "Username is already taken" });
     }
 
-    // If the username is not taken, create and save the new user
-    const newUser = new userModel({ name, userId, password, verified: true });
+    // Hash the password before saving it
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
+
+    // If the username is not taken, create and save the new user with the hashed password
+    const newUser = new userModel({ name, userId, password: hashedPassword, verified: true });
     await newUser.save();
 
     return res.status(201).json({ message: "User registered successfully" });
@@ -61,6 +79,7 @@ const registerController = async (req, res) => {
     return res.status(500).json({ message: "An error occurred while registering the user" });
   }
 };
+
 
 
 // const registerController = async(req,res)=>{

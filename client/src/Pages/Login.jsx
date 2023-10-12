@@ -18,10 +18,15 @@ const Login = () => {
         try {
           dispatch({type: "SHOW_LOADING"});
          const res = await axiosInstance.post('/api/users/login', value);
+         if(res.status === 200){
+
           dispatch({type: "HIDE_LOADING"});
           message.success("Login Succesfully !");
           localStorage.setItem('auth',JSON.stringify(res.data));
-          navigate('/');
+           navigate('/');
+         }else{
+          message.error("Login Failed: User not found or not verified");
+         }
         } catch (error) {
           dispatch({type: "HIDE_LOADING"});
           message.error("Something Went Wrong !")
@@ -31,10 +36,10 @@ const Login = () => {
 
     // currently login user
     useEffect(()=>{
-      if(localStorage.getItem('auth')){
-        localStorage.getItem('auth');
-        navigate('/');
-      }
+     const authData = JSON.parse(localStorage.getItem('auth'))
+     if(authData){
+      navigate('/')
+     }
     },[navigate]);
 
   return (

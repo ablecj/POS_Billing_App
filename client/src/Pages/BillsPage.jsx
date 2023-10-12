@@ -2,29 +2,34 @@ import React, { useEffect, useState } from "react";
 import DefaultLayout from "../Components/DefaultLayout";
 import { useDispatch } from "react-redux";
 import axios from "axios";
-import {  EyeOutlined } from "@ant-design/icons";
-import {  Table, Modal} from "antd";
+import { EyeOutlined } from "@ant-design/icons";
+import { Table, Modal } from "antd";
 
 const axiosInstance = axios.create({ baseURL: "http://localhost:8080" });
 
 const BillsPage = () => {
-
-  const [billsData, setBillsData] = useState([]);
   const dispatch = useDispatch();
   // popup modal
   const [popUpModal, setPopUpModal] = useState(false);
-  // usestate fro edit functionality
-  const [editItem, setEditItem] = useState(null)
+  // usestate for Billing 
+  const [selectBill, setSelectBill] = useState(null)
+
+  // usestate for edit functionality
+  const [billsData, setBillsData] = useState([]);
+
+  console.log(billsData,"billsData state")
 
   // getting data from the backend
   const getAllIBills = async () => {
     try {
       dispatch({ type: "SHOW_LOADING" });
       const { data } = await axiosInstance.get("/api/bills/get-bills");
-      // const { data} = await axios.get('/api/items/get-item');
-      setBillsData(data);
+      const { bills } = data;
+      setBillsData(bills);
+      console.log("Bills Data:", bills);
+      // setBillsData(data);
       dispatch({ type: "HIDE_LOADING" });
-      console.log("data from items page", data);
+      // console.log("data from items page", data);
     } catch (error) {
       dispatch({ type: "HIDE_LOADING" });
       console.log(error, "error occured!");
@@ -36,8 +41,6 @@ const BillsPage = () => {
     getAllIBills();
   }, []);
 
- 
-
   // table datas
   const columns = [
     { title: "ID", dataIndex: "_id" },
@@ -45,7 +48,6 @@ const BillsPage = () => {
     {
       title: "Customer Name",
       dataIndex: "customerName",
-     
     },
 
     { title: "Contact Number", dataIndex: "customerNumber" },
@@ -58,42 +60,43 @@ const BillsPage = () => {
       dataIndex: "_id",
       render: (id, record) => (
         <div>
-          <EyeOutlined />
+          <EyeOutlined 
+            style={{cursor: 'pointer'}}
+            onClick={()=>{
+              setSelectBill(record)
+              setPopUpModal(true);
+            }} 
+          />
+          
         </div>
       ),
     },
   ];
 
-  // handle form submit
-  // const handleSubmit = async (value) => {
-  //  console.log(value)
- 
-  // };
-
   return (
     <DefaultLayout>
-       <div className="d-flex justify-content-between">
+      <div className="d-flex justify-content-between">
         <h1>Invoice List</h1>
-      
       </div>
-      <Table columns={columns} dataSource={billsData} bordered />
-      {
-        popUpModal && (
-          <Modal
-          title={`${editItem !== null ? 'Edit Item' : 'Add New Item'}`}
-          visible={popUpModal}
+      {Array.isArray(billsData) ? (
+        <Table columns={columns} dataSource={billsData} bordered />
+      ) : (
+        <p>No data available</p>
+      )}
+      {popUpModal && (
+        <Modal
+          title="Invoice Details"
+          open={popUpModal}
           onCancel={() => {
             setPopUpModal(false);
-            setEditItem(null);
           }}
           footer={false}
         >
-      
+          {/* Your modal content */}
         </Modal>
-        )
-      }
+      )}
     </DefaultLayout>
-  )
-}
+  );
+};
 
-export default BillsPage
+export default BillsPage;
