@@ -30,6 +30,10 @@ const billSchema = mongoose.Schema(
       type: Array,
       required: true,
     },
+    date:{
+      type: Date,
+      default: Date.now(),
+    },
   },
   { timestamps: true }
 );
